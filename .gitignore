@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Conda
+env/
+.conda/
+
+# Models
+models/
+runs/
+wandb/
+*.pt
+*.zip
+
+# Notebook checkpoints
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# VSCode
+.vscode/
+
+# GIF outputs
+*.gif

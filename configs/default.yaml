@@ -1,0 +1,27 @@
+env:
+  grid_size: 5
+  n_skus: 20
+  orders_per_episode: 50
+  reward_mode: "dense"      # change to "sparse" for ablation
+  max_swaps_per_order: 10
+
+ppo:
+  total_timesteps: 500000
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  learning_rate: 0.0003
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.01          # entropy bonus — encourages exploration
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  policy: "MlpPolicy"     # fully connected net
+
+training:
+  log_dir: "./runs/"
+  model_dir: "./models/"
+  eval_freq: 10000
+  n_eval_episodes: 20
+  run_name: "ppo_dense_5x5"
