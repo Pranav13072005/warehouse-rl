@@ -1,7 +1,17 @@
 # warehouse-rl — Warehouse Order Picking with RL
 
-## 1) What this is (TL;DR)
-A small, self-contained RL project: a custom Gymnasium grid environment that simulates warehouse order picking, plus baselines (random + frequency heuristic) and PPO training/evaluation scripts.
+## 1. Motivation
+
+Modern fulfilment warehouses — particularly those operating under quick-commerce constraints (10–30 minute delivery windows) — face a fundamental operational challenge: **where should each product (SKU) be physically stored on the warehouse floor?**
+
+This problem, known as *warehouse slotting*, directly determines how far human pickers must walk to collect items for each customer order. In a warehouse handling thousands of orders per day, even a 10% reduction in average picker travel distance translates to measurable reductions in fulfilment latency, labour cost, and energy consumption.
+
+Existing industrial solutions are predominantly **static**: SKUs are assigned to slots once, based on historical demand frequency (ABC analysis), and reassigned only during scheduled reorganisation cycles. These approaches have two critical limitations:
+
+1. **They ignore co-purchase correlations.** Items frequently ordered together should be co-located near the depot. A pure frequency-based approach places each SKU independently, ignoring joint demand structure.
+2. **They cannot adapt to demand drift.** Consumer demand patterns shift continuously — seasonally, with promotions, and in response to market trends. A static assignment policy degrades in quality as the demand distribution changes.
+
+This project formulates warehouse slotting as a **sequential decision-making problem** and trains a deep RL agent to discover slot assignment policies that outperform both random and frequency-based heuristics, while adapting dynamically to the demand distribution seen during an episode.
 
 ## 2) Repo layout
 - `env/` — Gymnasium environment + synthetic demand generator
@@ -63,14 +73,4 @@ python -m visualise.render_episode --config configs/default.yaml --agent ppo --p
 ```
 (For `--agent random` or `heuristic`, PPO model isn’t required.)
 
-## 9) How to talk about this on a resume (numbers to fill)
-Replace brackets with your results from `runs/benchmark.csv` and ablation logs.
-- PPO improves average episode reward by **[X%]** over random and **[Y%]** over heuristic.
-- PPO achieves **[S%]** success rate (all orders fulfilled) within **[T]** max steps.
-- Dense reward shaping reduces time-to-threshold by **[R%]** vs sparse reward.
-- Scaling from 5x5 → 8x8 reduces performance by **[Δ]**, motivating curriculum/transfer.
-
-## 10) Repro tips
-- Keep `seed` fixed in `configs/default.yaml`
-- Save models and resolved env config under `runs/`
 
